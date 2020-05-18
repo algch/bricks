@@ -4,11 +4,16 @@ const DEFAULT_IP = '127.0.0.1'
 const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
 
+var ip_address
+
 func _ready():
 	if get_tree().is_network_server():
 		self.initServer()
 	else:
 		self.connectToServer()
+
+func init(address):
+	ip_address = address
 
 func initServer():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
@@ -29,4 +34,5 @@ func _connected_to_server(): # on client when connected to server
 	rpc_id(1, 'requestGameState', local_player_id)
 
 func startMatch():
+	# instance players
 	get_tree().change_scene('res://scenarios/arena.tscn')

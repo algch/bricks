@@ -72,7 +72,7 @@ margin_right = 149.0
 margin_bottom = 19.0
 text = "Join a match (enter I.P.)"
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+[node name="ipAddress" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
 margin_left = 153.0
 margin_right = 674.0
 margin_bottom = 24.0
@@ -84,3 +84,4 @@ margin_right = 719.0
 margin_bottom = 24.0
 text = "JOIN"
 [connection signal="pressed" from="VBoxContainer/soloButton" to="." method="_on_soloButton_pressed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer2/ipAddress" to="." method="_on_ipAddress_text_changed"]
