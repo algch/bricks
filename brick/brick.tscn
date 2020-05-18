@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://brick/sprites/Planta_Puntos0001.png" type="Texture" id=1]
+[ext_resource path="res://brick/brick.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 40, 40 )
+
+[node name="brick" type="StaticBody2D" groups=[
+"collisionable",
+]]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.472972, -0.181455 )
+scale = Vector2( 0.5987, 0.597566 )
+texture = ExtResource( 1 )
