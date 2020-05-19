@@ -55,7 +55,7 @@ margin_right = 682.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="serverButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 686.0
 margin_right = 719.0
 margin_bottom = 24.0
@@ -78,10 +78,12 @@ margin_right = 674.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+[node name="joinButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
 margin_left = 678.0
 margin_right = 719.0
 margin_bottom = 24.0
 text = "JOIN"
 [connection signal="pressed" from="VBoxContainer/soloButton" to="." method="_on_soloButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/serverButton" to="." method="_on_serverButton_pressed"]
 [connection signal="text_changed" from="VBoxContainer/HBoxContainer2/ipAddress" to="." method="_on_ipAddress_text_changed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/joinButton" to="." method="_on_joinButton_pressed"]

@@ -5,15 +5,17 @@ const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 2
 
 var ip_address
+var start_server
+
+func init(ip, server):
+	ip_address = ip
+	start_server = server
 
 func _ready():
-	if get_tree().is_network_server():
+	if start_server:
 		self.initServer()
 	else:
 		self.connectToServer()
-
-func init(address):
-	ip_address = address
 
 func initServer():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
@@ -22,7 +24,7 @@ func initServer():
 	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
 
-func connectToServer(): # 1
+func connectToServer():
 	get_tree().connect('connected_to_server', self, '_connected_to_server')
 	var peer = NetworkedMultiplayerENet.new()
 	print('Requesting connection to lobby [' + ip_address + ']')
