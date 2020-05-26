@@ -19,5 +19,7 @@ func shootArrow():
 
 
 func _input(event):
+	if not get_parent().is_player_turn:
+		return
 	if event.is_action_released('touch'):
 		self.shootArrow()

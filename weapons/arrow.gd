@@ -9,10 +9,14 @@ func init(dir, pos):
 	position = pos
 	rotation = dir.angle() + PI/2
 
+remotesync func destroy():
+	queue_free()
+
 func handleCollision(collision):
 	var collider = collision.get_collider()
 
 	if collider is TileMap and position.y > player.position.y:
+		Network.handleTurnEnded()
 		queue_free()
 
 	if collider.is_in_group('collisionable'):

@@ -6,13 +6,13 @@ var lobby_class = preload('res://menus/lobby.tscn')
 var ip_address = ''
 
 
-func _on_soloButton_pressed():
+func _on_solo():
 	pass
 
-func _on_serverButton_pressed():
+func _on_createMatch():
 	self.createLobby(true)
 
-func _on_joinButton_pressed():
+func _on_join():
 	self.createLobby(false)
 
 func createLobby(server):

@@ -27,3 +27,9 @@ align = 1
 margin_top = 18.0
 margin_right = 719.0
 margin_bottom = 18.0
+
+[node name="ready" type="CheckButton" parent="VBoxContainer"]
+margin_top = 22.0
+margin_right = 719.0
+margin_bottom = 62.0
+[connection signal="pressed" from="VBoxContainer/ready" to="." method="_on_ready_pressed"]

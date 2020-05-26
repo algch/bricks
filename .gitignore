@@ -1,4 +1,6 @@
+build/
 .import/
 **/*.*.import
 **/*.*~
 **/.DS_Store
+export_presets.cfg
