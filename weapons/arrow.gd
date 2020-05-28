@@ -9,15 +9,15 @@ func init(dir, pos):
 	position = pos
 	rotation = dir.angle() + PI/2
 
+func getOwner():
+	var net_id = str(get_tree().get_network_unique_id())
+	return get_node('/root/arena/' + net_id)
+
 remotesync func destroy():
 	queue_free()
 
 func handleCollision(collision):
 	var collider = collision.get_collider()
-
-	if collider is TileMap and position.y > player.position.y:
-		Network.handleTurnEnded()
-		queue_free()
 
 	if collider.is_in_group('collisionable'):
 		collider.handleWeaponCollision()

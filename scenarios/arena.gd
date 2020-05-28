@@ -8,7 +8,7 @@ var client_id
 var player_bricks = []
 var opponent_bricks = []
 
-var is_player_turn
+var is_player_turn = false
 
 func init(server, client):
 	server_id = server
@@ -45,6 +45,7 @@ func _on_turnTimer_timeout():
 
 func decideStartingTurn():
 	is_player_turn = randi() % 2 == 0
+	print('is server turn ', is_player_turn)
 	rpc('syncTurn', !is_player_turn)
 
 remote func syncTurn(turn):

@@ -29,6 +29,6 @@ func _physics_process(delta):
 	var collision = move_and_collide(motion)
 	if collision:
 		move_dir *= -1
-	if get_tree().is_network_server():
-		# update using a timer or on every collision maybe?
-		rpc_unreliable('updateBrickPos', position)
+		if get_tree().is_network_server():
+			# update using a timer or on every collision maybe?
+			rpc('updateBrickPos', position)

@@ -21,6 +21,7 @@ func spawnBricks():
 	)
 	player_brick.set_position(player_brick_pos)
 	arena.add_child(player_brick)
+	arena.player_bricks.append(player_brick)
 
 	var opponent_brick_pos = Vector2(
 		360,
@@ -28,3 +29,4 @@ func spawnBricks():
 	)
 	opponent_brick.set_position(opponent_brick_pos)
 	arena.add_child(opponent_brick)
+	arena.opponent_bricks.append(opponent_brick)

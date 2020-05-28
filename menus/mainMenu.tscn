@@ -87,13 +87,14 @@ text = "Join a match (enter I.P.)"
 
 [node name="ipAddress" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
 margin_left = 153.0
-margin_right = 400.0
+margin_right = 674.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
+text = "192.168.1."
 
 [node name="joinButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 500.0
-margin_right = 700.0
+margin_left = 678.0
+margin_right = 719.0
 margin_bottom = 24.0
 text = "JOIN"
 [connection signal="pressed" from="VBoxContainer/soloButton" to="." method="_on_solo"]
