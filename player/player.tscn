@@ -47,4 +47,4 @@ frames = SubResource( 1 )
 animation = "aim"
 
 [node name="nozzle" type="Position2D" parent="."]
-position = Vector2( 2.0506, -112.78 )
+position = Vector2( 0, -115 )

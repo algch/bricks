@@ -12,9 +12,11 @@ func _ready():
 	pass
 
 func shootArrow():
+	if not is_player:
+		return
+
 	var mouse_pos = get_global_mouse_position()
-	var nozzle_pos = $nozzle.position
-	var start_pos = position + nozzle_pos
+	var start_pos = $nozzle.get_global_position()
 
 	var arrow_dir = (mouse_pos - start_pos).normalized()
 	var arrow = arrow_class.instance()
@@ -24,13 +26,8 @@ func shootArrow():
 	get_parent().add_child(arrow)
 
 remote func syncArrow(x_pos, dir):
-	if is_player:
-		return
-
-	print('sync arrow called')
-
-	var nozzle_pos = $nozzle.position
-	var start_pos = position + nozzle_pos
+	var start_pos = $nozzle.get_global_position()
+	print('sync arrow start pos ', start_pos)
 	start_pos.x = x_pos
 
 	var arrow = arrow_class.instance()
