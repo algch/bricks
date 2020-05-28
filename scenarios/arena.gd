@@ -20,6 +20,7 @@ func instantiatePlayer():
 	player.set_name(str(id))
 	player.set_network_master(id)
 	player.set_position($playerPos.position)
+	player.init(true)
 	add_child(player)
 
 func instantiateOpponent():
@@ -29,6 +30,7 @@ func instantiateOpponent():
 	player.set_network_master(id)
 	player.set_position($opponentPos.position)
 	player.rotate(PI)
+	player.init(false)
 	add_child(player)
 
 remotesync func endTurn(turn):
