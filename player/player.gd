@@ -20,14 +20,13 @@ func shootArrow():
 
 	var arrow_dir = (mouse_pos - start_pos).normalized()
 	var arrow = arrow_class.instance()
-	var mirrored_dir = Vector2(-arrow_dir.x, arrow_dir.y)
+	var mirrored_dir = arrow_dir.rotated(PI)
 	rpc('syncArrow', start_pos.x, mirrored_dir)
 	arrow.init(arrow_dir, start_pos)
 	get_parent().add_child(arrow)
 
 remote func syncArrow(x_pos, dir):
 	var start_pos = $nozzle.get_global_position()
-	print('sync arrow start pos ', start_pos)
 	start_pos.x = x_pos
 
 	var arrow = arrow_class.instance()
