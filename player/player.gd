@@ -27,6 +27,8 @@ remote func syncArrow(x_pos, dir):
 	if is_player:
 		return
 
+	print('sync arrow called')
+
 	var nozzle_pos = $nozzle.position
 	var start_pos = position + nozzle_pos
 	start_pos.x = x_pos
@@ -36,9 +38,15 @@ remote func syncArrow(x_pos, dir):
 	get_parent().add_child(arrow)
 
 func _draw():
+	draw_rect(
+		Rect2(
+			position + Vector2(100, -50),
+			Vector2(200, 100)
+		),
+		Color(0.2, 0.2, 0.2)
+	)
 	if arena.is_player_turn:
-		draw_circle(Vector2(0, 0), 100, Color(1, 0.2, 0.3))
-		draw_circle(position, 100, Color(1, 0.2, 0.3))
+		draw_circle(position + Vector2(100, 0), 50, Color(1, 0.2, 0.3))
 
 func _input(event):
 	if not get_parent().is_player_turn:

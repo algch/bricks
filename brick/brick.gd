@@ -17,18 +17,22 @@ func drawBrick():
 func _draw():
 	drawBrick()
 
-func handleWeaponCollision(collider):
-	collider.rpc('destroy')
+remotesync func destroy():
 	queue_free()
 
-remote func updateBrickPos(pos):
+func handleWeaponCollision(collider):
+	collider.rpc('destroy')
+
+func _on_updateTimer_timeout():
+	if get_tree().is_network_server():
+		rpc('updateBrick', position, move_dir)
+
+remote func updateBrick(pos, dir):
 	position = pos
+	move_dir = dir
 
 func _physics_process(delta):
 	var motion = move_dir * SPEED * delta
 	var collision = move_and_collide(motion)
 	if collision:
 		move_dir *= -1
-		if get_tree().is_network_server():
-			# update using a timer or on every collision maybe?
-			rpc('updateBrickPos', position)

@@ -20,7 +20,7 @@ func handleCollision(collision):
 	var collider = collision.get_collider()
 
 	if collider.is_in_group('collisionable'):
-		collider.handleWeaponCollision()
+		collider.handleWeaponCollision(collider)
 
 	var normal = collision.get_normal()
 	direction = direction.bounce(normal)
