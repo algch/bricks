@@ -31,7 +31,7 @@ func handleWeaponCollision(collider):
 
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
-		rpc('updateBrick', position, move_dir)
+		rpc_unreliable('updateBrick', position, move_dir)
 		$updateTimer.start()
 
 remote func updateBrick(pos, dir):

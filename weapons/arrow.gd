@@ -40,6 +40,7 @@ func _physics_process(delta):
 remote func updateArrow(pos, dir):
 	position = pos
 	direction = dir
+	rotation = dir.angle() + PI/2
 
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
@@ -49,5 +50,5 @@ func _on_updateTimer_timeout():
 		var mirrored_y = Y + (Y - position.y)
 		var mirrored_pos = Vector2(mirrored_x, mirrored_y)
 		var mirrored_dir = direction.rotated(PI)
-		rpc('updateArrow', mirrored_pos, mirrored_dir)
+		rpc_unreliable('updateArrow', mirrored_pos, mirrored_dir)
 		$updateTimer.start()
