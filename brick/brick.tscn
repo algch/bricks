@@ -19,4 +19,5 @@ scale = Vector2( 0.5987, 0.597566 )
 
 [node name="updateTimer" type="Timer" parent="."]
 wait_time = 0.5
+autostart = true
 [connection signal="timeout" from="updateTimer" to="." method="_on_updateTimer_timeout"]

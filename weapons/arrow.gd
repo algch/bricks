@@ -4,6 +4,10 @@ var direction = Vector2(0, 0)
 var speed = 400
 onready var player = get_node('/root/arena/player')
 
+func _ready():
+	if get_tree().is_network_server():
+		$updateTimer.start()
+
 func init(dir, pos):
 	direction = dir.normalized()
 	position = pos
@@ -32,3 +36,16 @@ func _physics_process(delta):
 
 	if collision:
 		self.handleCollision(collision)
+
+remote func updateArrow(pos):
+	position = pos
+
+func _on_updateTimer_timeout():
+	if get_tree().is_network_server():
+		var X = 360
+		var Y = 640
+		var mirrored_x = X + (X - position.x)
+		var mirrored_y = Y + (Y - position.y)
+		var mirrored_pos = Vector2(mirrored_x, mirrored_y)
+		rpc('updateArrow', mirrored_pos)
+		$updateTimer.start()
