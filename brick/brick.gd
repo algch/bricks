@@ -27,7 +27,9 @@ remotesync func destroy():
 	queue_free()
 
 func handleWeaponCollision(collider):
-	collider.rpc('destroy')
+	if get_tree().is_network_server():
+		rpc('destroy')
+		collider.rpc('destroy')
 
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
