@@ -5,10 +5,12 @@ const Y_SIZE = 80
 const SPEED = 200
 
 var move_dir = Vector2(1, 0)
+var type = null
 
 # TAMBIÉN ESTÁN ESPEJEADOS, ARREGLA ESTO
 
 func _ready():
+	type = 'normal'
 	if get_tree().is_network_server():
 		$updateTimer.start()
 
@@ -31,7 +33,10 @@ func handleWeaponCollision(collider):
 
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
-		rpc_unreliable('updateBrick', position, move_dir)
+		var X = 360
+		var mirrored_x = X + (X - position.x)
+		var mirrored_pos = Vector2(mirrored_x, position.y)
+		rpc_unreliable('updateBrick', mirrored_pos, move_dir)
 		$updateTimer.start()
 
 remote func updateBrick(pos, dir):

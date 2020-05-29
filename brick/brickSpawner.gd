@@ -11,6 +11,12 @@ func _ready():
 	BRICK_X_SIZE = brick.X_SIZE
 	BRICK_Y_SIZE = brick.Y_SIZE
 
+func parseBrick(brick):
+	return {
+		'pos': brick.get_global_position(),
+		'type': brick.get_type(),
+	}
+
 func spawnBricks():
 	var player_brick = brick_class.instance()
 	var opponent_brick = brick_class.instance()
@@ -21,7 +27,8 @@ func spawnBricks():
 	)
 	player_brick.set_position(player_brick_pos)
 	arena.add_child(player_brick)
-	arena.player_bricks.append(player_brick)
+	var parsed_player_brick = parseBrick(player_brick)
+	arena.player_bricks.append(parsed_player_brick)
 
 	var opponent_brick_pos = Vector2(
 		360,
@@ -29,4 +36,12 @@ func spawnBricks():
 	)
 	opponent_brick.set_position(opponent_brick_pos)
 	arena.add_child(opponent_brick)
-	arena.opponent_bricks.append(opponent_brick)
+	var parsed_opponent_brick = parseBrick(player_brick)
+	arena.opponent_bricks.append(parsed_opponent_brick)
+
+	# bricks are mirrored
+	rpc('syncSpawnedBricks', arena.opponent_bricks, arena.player_bricks)
+
+remote func syncSpawnedBricks(player_bricks, opponent_bricks):
+	arena.player_bricks = player_bricks
+	arena.opponent_bricks = opponent_bricks
