@@ -34,7 +34,8 @@ func _on_updateTimer_timeout():
 		var X = 360
 		var mirrored_x = X + (X - position.x)
 		var mirrored_pos = Vector2(mirrored_x, position.y)
-		rpc_unreliable('updateBrick', mirrored_pos, move_dir)
+		var mirrored_dir = move_dir.rotated(PI)
+		rpc_unreliable('updateBrick', mirrored_pos, mirrored_dir)
 		$updateTimer.start()
 
 remote func updateBrick(pos, dir):
