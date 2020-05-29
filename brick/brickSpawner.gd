@@ -14,7 +14,7 @@ func _ready():
 func parseBrick(brick):
 	return {
 		'pos': brick.get_global_position(),
-		'type': brick.get_type(),
+		'type': brick.type,
 	}
 
 func spawnBricks():
