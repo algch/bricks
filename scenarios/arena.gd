@@ -47,11 +47,14 @@ func _on_turnTimer_timeout():
 
 func decideStartingTurn():
 	is_player_turn = randi() % 2 == 0
-	print('is server turn ', is_player_turn)
+	if is_player_turn:
+		$brickSpawner.spawnBricks()
 	rpc('syncTurn', !is_player_turn)
 
 remote func syncTurn(turn):
 	is_player_turn = turn
+	if is_player_turn:
+		$brickSpawner.spawnBricks()
 
 func _ready():
 	if get_tree().is_network_server():
@@ -59,5 +62,4 @@ func _ready():
 
 	instantiatePlayer()
 	instantiateOpponent()
-	if is_player_turn:
-		$brickSpawner.spawnBricks()
+	print('is player turn ', is_player_turn)
