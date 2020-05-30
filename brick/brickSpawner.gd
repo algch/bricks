@@ -38,7 +38,7 @@ func createBrick(brick_list):
 func createBrickFromParsed(parsed_brick):
 	var brick = brick_class.instance()
 	brick.set_name(parsed_brick.get('name'))
-	brick.set_position(parsed_brick.get('name'))
+	brick.set_position(parsed_brick.get('pos'))
 	brick.type = parsed_brick.get('type')
 	arena.add_child(brick)
 
