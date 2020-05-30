@@ -6,6 +6,8 @@ var BRICK_Y_SIZE
 const BRICK_SPACE = 10
 onready var arena = get_node('/root/arena/')
 
+# TODO mirror birck rpc calls, server must decide brick type
+
 func _ready():
 	var brick = brick_class.instance()
 	BRICK_X_SIZE = brick.X_SIZE
@@ -13,35 +15,45 @@ func _ready():
 
 func parseBrick(brick):
 	return {
+		'name': brick.get_name(),
 		'pos': brick.get_global_position(),
 		'type': brick.type,
 	}
 
-func spawnBricks():
-	var player_brick = brick_class.instance()
-	var opponent_brick = brick_class.instance()
-
-	var player_brick_pos = Vector2(
+func createBrick(brick_list):
+	var brick = brick_class.instance()
+	var player_id = get_tree().get_network_unique_id()
+	var brick_id = brick.get_instance_id()
+	var name = str(player_id) + '_' + str(brick_id)
+	var brick_pos = Vector2(
 		360,
-		position.y + BRICK_Y_SIZE + BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(arena.player_bricks)
+		position.y + BRICK_Y_SIZE + BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(brick_list)
 	)
-	player_brick.set_position(player_brick_pos)
-	arena.add_child(player_brick)
+	brick.set_name(name)
+	brick.set_position(brick_pos)
+	arena.add_child(brick)
+
+	return brick
+
+func createBrickFromParsed(parsed_brick):
+	var brick = brick_class.instance()
+	brick.set_name(parsed_brick.get('name'))
+	brick.set_position(parsed_brick.get('name'))
+	brick.type = parsed_brick.get('type')
+	arena.add_child(brick)
+
+func spawnBricks():
+	var player_brick = createBrick(arena.player_bricks)
 	var parsed_player_brick = parseBrick(player_brick)
 	arena.player_bricks.append(parsed_player_brick)
 
-	var opponent_brick_pos = Vector2(
-		360,
-		position.y - (BRICK_Y_SIZE + BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(arena.opponent_bricks))
-	)
-	opponent_brick.set_position(opponent_brick_pos)
-	arena.add_child(opponent_brick)
-	var parsed_opponent_brick = parseBrick(player_brick)
+	var opponent_brick = createBrick(arena.opponent_bricks)
+	var parsed_opponent_brick = parseBrick(opponent_brick)
 	arena.opponent_bricks.append(parsed_opponent_brick)
 
 	# bricks are mirrored
-	rpc('syncSpawnedBricks', arena.opponent_bricks, arena.player_bricks)
+	rpc('syncSpawnedBricks', parsed_opponent_brick, parsed_player_brick)
 
-remote func syncSpawnedBricks(player_bricks, opponent_bricks):
-	arena.player_bricks = player_bricks
-	arena.opponent_bricks = opponent_bricks
+remote func syncSpawnedBricks(player_brick, opponent_brick):
+	arena.player_bricks.append(player_brick)
+	arena.opponent_bricks.append(opponent_brick)

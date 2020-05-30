@@ -7,6 +7,8 @@ const SPEED = 200
 var move_dir = Vector2(1, 0)
 var type = null
 
+# TODO rpc call is being executed in the wrong brick
+
 func _ready():
 	type = 'normal'
 	if get_tree().is_network_server():

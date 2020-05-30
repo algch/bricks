@@ -59,4 +59,5 @@ func _ready():
 
 	instantiatePlayer()
 	instantiateOpponent()
-	$brickSpawner.spawnBricks()
+	if is_player_turn:
+		$brickSpawner.spawnBricks()
