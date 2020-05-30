@@ -62,4 +62,3 @@ func _ready():
 
 	instantiatePlayer()
 	instantiateOpponent()
-	print('is player turn ', is_player_turn)

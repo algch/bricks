@@ -56,4 +56,6 @@ func spawnBricks():
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
 	arena.player_bricks.append(player_brick)
+	createBrickFromParsed(player_brick)
 	arena.opponent_bricks.append(opponent_brick)
+	createBrickFromParsed(opponent_brick)
