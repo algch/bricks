@@ -71,7 +71,7 @@ func spawnBricks():
 	var mirrored_player_brick = mirrorBrick(player_brick)
 	print('mirrored player brick pos ', mirrored_player_brick['pos'])
 	print('mirrored opponent brick pos ', mirrored_opponent_brick['pos'])
-	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick)
+	rpc('syncSpawnedBricks', mirrored_player_brick, mirrored_opponent_brick)
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
 	print('received player brick pos ', player_brick['pos'])
