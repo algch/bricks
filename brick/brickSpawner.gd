@@ -63,9 +63,14 @@ func spawnBricks():
 	var parsed_opponent_brick = parseBrick(opponent_brick)
 	arena.opponent_bricks.append(parsed_opponent_brick)
 
+	print('player brick pos ', player_brick.get_position())
+	print('opponent brick pos ', opponent_brick.get_position())
+
 	# bricks are mirrored
 	var mirrored_opponent_brick = mirrorBrick(opponent_brick)
 	var mirrored_player_brick = mirrorBrick(player_brick)
+	print('mirrored player brick pos ', mirrored_player_brick['pos'])
+	print('mirrored opponent brick pos ', mirrored_opponent_brick['pos'])
 	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick)
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
