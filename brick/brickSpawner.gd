@@ -27,6 +27,7 @@ func createBrick(brick_list, dir):
 	var name = str(player_id) + '_' + str(brick_id)
 	var y_pos = position.y + (dir * BRICK_Y_SIZE)
 	y_pos += (dir) * (BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(brick_list))
+	print('brick ', name, ' y_pos ', y_pos)
 	var brick_pos = Vector2(
 		360,
 		y_pos
