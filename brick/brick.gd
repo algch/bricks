@@ -35,17 +35,15 @@ func handleWeaponCollision(collider):
 		collider.rpc('destroy')
 
 func _on_updateTimer_timeout():
-	return
 	if get_tree().is_network_server():
 		var X = 360
 		var mirrored_x = X + (X - position.x)
-		var mirrored_pos = Vector2(mirrored_x, position.y)
 		var mirrored_dir = move_dir.rotated(PI)
-		rpc_unreliable('updateBrick', mirrored_pos, mirrored_dir)
+		rpc_unreliable('updateBrick', mirrored_x, mirrored_dir)
 		$updateTimer.start()
 
-remote func updateBrick(pos, dir):
-	position = pos
+remote func updateBrick(x, dir):
+	position.x = x
 	move_dir = dir
 
 func _physics_process(delta):

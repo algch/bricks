@@ -56,11 +56,11 @@ func mirrorBrick(brick):
 	}
 
 func spawnBricks():
-	var player_brick = createBrick(arena.player_bricks, -1)
+	var player_brick = createBrick(arena.player_bricks, 1)
 	var parsed_player_brick = parseBrick(player_brick)
 	arena.player_bricks.append(parsed_player_brick)
 
-	var opponent_brick = createBrick(arena.opponent_bricks, 1)
+	var opponent_brick = createBrick(arena.opponent_bricks, -1)
 	var parsed_opponent_brick = parseBrick(opponent_brick)
 	arena.opponent_bricks.append(parsed_opponent_brick)
 
