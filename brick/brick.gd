@@ -35,6 +35,7 @@ func handleWeaponCollision(collider):
 		collider.rpc('destroy')
 
 func _on_updateTimer_timeout():
+	return
 	if get_tree().is_network_server():
 		var X = 360
 		var mirrored_x = X + (X - position.x)
