@@ -20,14 +20,16 @@ func parseBrick(brick):
 		'type': brick.type,
 	}
 
-func createBrick(brick_list):
+func createBrick(brick_list, dir):
 	var brick = brick_class.instance()
 	var player_id = get_tree().get_network_unique_id()
 	var brick_id = brick.get_instance_id()
 	var name = str(player_id) + '_' + str(brick_id)
+	var y_pos = position.y + (dir * BRICK_Y_SIZE)
+	y_pos += (dir) * (BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(brick_list))
 	var brick_pos = Vector2(
 		360,
-		position.y + BRICK_Y_SIZE + BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(brick_list)
+		y_pos
 	)
 	brick.set_name(name)
 	brick.set_position(brick_pos)
@@ -43,11 +45,11 @@ func createBrickFromParsed(parsed_brick):
 	arena.add_child(brick)
 
 func spawnBricks():
-	var player_brick = createBrick(arena.player_bricks)
+	var player_brick = createBrick(arena.player_bricks, 1)
 	var parsed_player_brick = parseBrick(player_brick)
 	arena.player_bricks.append(parsed_player_brick)
 
-	var opponent_brick = createBrick(arena.opponent_bricks)
+	var opponent_brick = createBrick(arena.opponent_bricks, -1)
 	var parsed_opponent_brick = parseBrick(opponent_brick)
 	arena.opponent_bricks.append(parsed_opponent_brick)
 
