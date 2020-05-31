@@ -74,6 +74,8 @@ func spawnBricks():
 	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick)
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
+	print('received player brick pos ', player_brick['pos'])
+	print('received opponent brick pos ', opponent_brick['pos'])
 	arena.player_bricks.append(player_brick)
 	createBrickFromParsed(player_brick)
 	arena.opponent_bricks.append(opponent_brick)
