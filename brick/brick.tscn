@@ -20,4 +20,13 @@ scale = Vector2( 0.5987, 0.597566 )
 [node name="updateTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="Label" type="Label" parent="."]
+margin_left = -37.8948
+margin_top = -36.8421
+margin_right = 2.10522
+margin_bottom = -22.8421
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="updateTimer" to="." method="_on_updateTimer_timeout"]

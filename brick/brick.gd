@@ -11,6 +11,7 @@ var type = null
 
 func _ready():
 	type = 'normal'
+	$Label.set_text(get_name())
 	if get_tree().is_network_server():
 		$updateTimer.start()
 
