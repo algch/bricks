@@ -23,5 +23,5 @@ position = Vector2( 360, 100 )
 position = Vector2( 360, 640 )
 
 [node name="turnTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
 [connection signal="timeout" from="turnTimer" to="." method="_on_turnTimer_timeout"]
