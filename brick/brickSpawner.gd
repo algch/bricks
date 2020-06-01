@@ -16,6 +16,7 @@ func _ready():
 func parseBrick(brick):
 	return {
 		'name': brick.get_name(),
+		'dir': brick.move_dir,
 		'pos': brick.get_global_position(),
 		'type': brick.type,
 	}
@@ -27,7 +28,6 @@ func createBrick(brick_list, dir):
 	var name = str(player_id) + '_' + str(brick_id)
 	var y_pos = position.y + (dir * BRICK_Y_SIZE)
 	y_pos += (dir) * (BRICK_Y_SIZE/2 + BRICK_Y_SIZE * len(brick_list))
-	print('brick ', name, ' y_pos ', y_pos)
 	var brick_pos = Vector2(
 		360,
 		y_pos
@@ -43,6 +43,7 @@ func createBrickFromParsed(parsed_brick):
 	brick.set_name(parsed_brick.get('name'))
 	brick.set_position(parsed_brick.get('pos'))
 	brick.type = parsed_brick.get('type')
+	brick.move_dir = parsed_brick.get('dir')
 	arena.add_child(brick)
 
 func mirrorBrick(brick):
@@ -51,6 +52,7 @@ func mirrorBrick(brick):
 	var mirrored_pos = Vector2(mirrored_x, mirrored_y)
 	return {
 		'name': brick.get_name(),
+		'dir': brick.move_dir,
 		'pos': mirrored_pos,
 		'type': brick.type,
 	}

@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var direction = Vector2(0, 0)
-var speed = 100
+var speed = 640
 onready var player = get_node('/root/arena/player')
 
 func _ready():

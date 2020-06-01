@@ -4,13 +4,16 @@ const X_SIZE = 80
 const Y_SIZE = 80
 const SPEED = 50
 
-var move_dir = Vector2(1, 0)
+var move_dir = null
 var type = null
 
 # TODO rpc call is being executed in the wrong brick
 
 func _ready():
-	type = 'normal'
+	if not move_dir:
+		move_dir = Vector2(1 if randi() % 2 == 0 else -1, 0)
+	if not type:
+		type = 'normal'
 	$Label.set_text(get_name())
 	if get_tree().is_network_server():
 		$updateTimer.start()
