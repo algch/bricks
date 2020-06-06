@@ -41,7 +41,7 @@ func _draw():
 		),
 		Color(0.2, 0.2, 0.2)
 	)
-	if arena.is_player_turn:
+	if arena.is_player_turn and get_name() == str(get_tree().get_network_unique_id()):
 		draw_circle(position + Vector2(100, 0), 50, Color(1, 0.2, 0.3))
 
 func _input(event):

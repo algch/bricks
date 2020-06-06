@@ -7,6 +7,8 @@ const SPEED = 50
 var move_dir = null
 var type = null
 
+onready var arena = get_node('/root/arena')
+
 # TODO rpc call is being executed in the wrong brick
 
 func _ready():
@@ -36,6 +38,7 @@ func handleWeaponCollision(collider):
 	if get_tree().is_network_server():
 		rpc('destroy')
 		collider.rpc('destroy')
+		arena.rpc('endTurn')
 
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
