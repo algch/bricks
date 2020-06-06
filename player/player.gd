@@ -36,13 +36,14 @@ remote func syncArrow(x_pos, dir):
 func _draw():
 	draw_rect(
 		Rect2(
-			position + Vector2(100, -50),
+			Vector2(100, -50),
 			Vector2(200, 100)
 		),
 		Color(0.2, 0.2, 0.2)
 	)
 	if arena.is_player_turn and get_name() == str(get_tree().get_network_unique_id()):
-		draw_circle(position + Vector2(100, 0), 50, Color(1, 0.2, 0.3))
+		print(get_name() + ' turn')
+		draw_circle(Vector2(200, 0), 50, Color(1, 0.2, 0.3))
 
 func _input(event):
 	if not get_parent().is_player_turn:
