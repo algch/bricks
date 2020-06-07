@@ -32,6 +32,14 @@ func _draw():
 	drawBrick()
 
 remotesync func destroy():
+	var name = get_name()
+
+	if name in arena.player_bricks:
+		arena.player_bricks.erase(name)
+
+	if name in arena.opponent_bricks:
+		arena.opponent_bricks.erase(name)
+
 	queue_free()
 
 func handleWeaponCollision(collider):

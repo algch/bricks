@@ -5,8 +5,8 @@ const player_class = preload('res://player/player.tscn')
 var server_id
 var client_id
 
-var player_bricks = []
-var opponent_bricks = []
+var player_bricks = {}
+var opponent_bricks = {}
 
 var is_player_turn = false
 
@@ -35,12 +35,19 @@ func instantiateOpponent():
 
 remotesync func endTurn(turn):
 	$turnTimer.stop()
+
 	for weapon in get_tree().get_nodes_in_group('weapons'):
 		weapon.destroy()
+
 	if get_tree().get_rpc_sender_id() == get_tree().get_network_unique_id():
 		is_player_turn = turn
 	else:
 		is_player_turn = !turn
+
+	# check logic. Should te server handle brick spawning?
+	$brickSpawner.moveBricksToNextPos()
+	$brickSpawner.spawnBricks()
+
 	if is_player_turn:
 		$turnTimer.start()
 

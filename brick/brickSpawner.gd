@@ -6,8 +6,6 @@ var BRICK_Y_SIZE
 const BRICK_SPACE = 10
 onready var arena = get_node('/root/arena/')
 
-# TODO mirror birck rpc calls, server must decide brick type
-
 func _ready():
 	var brick = brick_class.instance()
 	BRICK_X_SIZE = brick.X_SIZE
@@ -57,14 +55,21 @@ func mirrorBrick(brick):
 		'type': brick.type,
 	}
 
+func moveBricksToNextPos():
+	for brick_name in arena.player_bricks:
+		arena.player_bricks[brick_name]['pos'] += BRICK_Y_SIZE
+
+	for brick_name in arena.opponent_bricks:
+		arena.opponent_bricks[brick_name]['pos'] -= BRICK_Y_SIZE
+
 func spawnBricks():
 	var player_brick = createBrick(arena.player_bricks, 1)
 	var parsed_player_brick = parseBrick(player_brick)
-	arena.player_bricks.append(parsed_player_brick)
+	arena.player_bricks[player_brick.get_name()] = parsed_player_brick
 
 	var opponent_brick = createBrick(arena.opponent_bricks, -1)
 	var parsed_opponent_brick = parseBrick(opponent_brick)
-	arena.opponent_bricks.append(parsed_opponent_brick)
+	arena.opponent_bricks[opponent_brick.get_name()] = parsed_opponent_brick
 
 	# bricks are mirrored
 	var mirrored_opponent_brick = mirrorBrick(opponent_brick)
@@ -72,7 +77,7 @@ func spawnBricks():
 	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick) # executes in opponent
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
-	arena.player_bricks.append(player_brick)
+	arena.player_bricks[player_brick.get('name')] = player_brick
 	createBrickFromParsed(player_brick)
-	arena.opponent_bricks.append(opponent_brick)
+	arena.opponent_bricks[opponent_brick.get('name')] = opponent_brick
 	createBrickFromParsed(opponent_brick)
