@@ -45,8 +45,9 @@ remotesync func endTurn(turn):
 		is_player_turn = !turn
 
 	# check logic. Should te server handle brick spawning?
-	$brickSpawner.moveBricksToNextPos()
-	$brickSpawner.spawnBricks()
+	# $brickSpawner.moveBricksToNextPos()
+	if is_player_turn:
+		$brickSpawner.spawnBricks()
 
 	if is_player_turn:
 		$turnTimer.start()

@@ -3,7 +3,7 @@
 [ext_resource path="res://brick/brick.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 40, 40 )
+extents = Vector2( 40, 20 )
 
 [node name="brick" type="KinematicBody2D" groups=[
 "collisionable",
