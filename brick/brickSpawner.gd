@@ -57,10 +57,10 @@ func mirrorBrick(brick):
 
 func moveBricksToNextPos():
 	for brick_name in arena.player_bricks:
-		arena.player_bricks[brick_name]['pos'] += BRICK_Y_SIZE
+		arena.player_bricks[brick_name]['pos'] += Vector2(0, BRICK_Y_SIZE)
 
 	for brick_name in arena.opponent_bricks:
-		arena.opponent_bricks[brick_name]['pos'] -= BRICK_Y_SIZE
+		arena.opponent_bricks[brick_name]['pos'] -= Vector2(0, BRICK_Y_SIZE)
 
 func spawnBricks():
 	var player_brick = createBrick(arena.player_bricks, 1)
