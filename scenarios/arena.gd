@@ -35,6 +35,8 @@ func instantiateOpponent():
 
 remotesync func endTurn(turn):
 	$turnTimer.stop()
+	for weapon in get_tree().get_nodes_in_group('weapons'):
+		weapon.destroy()
 	if get_tree().get_rpc_sender_id() == get_tree().get_network_unique_id():
 		is_player_turn = turn
 	else:

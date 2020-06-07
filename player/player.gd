@@ -41,7 +41,9 @@ func _draw():
 		),
 		Color(0.2, 0.2, 0.2)
 	)
-	if arena.is_player_turn:
+	if arena.is_player_turn and is_player:
+		draw_circle(Vector2(200, 0), 50, Color(1, 0.2, 0.3))
+	if not arena.is_player_turn and not is_player:
 		draw_circle(Vector2(200, 0), 50, Color(1, 0.2, 0.3))
 
 func _input(event):
