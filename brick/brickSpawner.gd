@@ -66,7 +66,7 @@ func moveBricksToNextPos():
 	for brick_name in arena.opponent_bricks:
 		arena.opponent_bricks[brick_name]['pos'] -= Vector2(0, BRICK_Y_SIZE)
 		var brick = getBrickByName(brick_name)
-		brick.position = arena.player_bricks[brick_name]['pos']
+		brick.position = arena.opponent_bricks[brick_name]['pos']
 
 func spawnBricks():
 	var player_brick = createBrick(1)
