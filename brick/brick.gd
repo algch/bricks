@@ -51,7 +51,6 @@ func handleWeaponCollision(collider):
 		arena.rpc('endTurn')
 
 func _on_updateTimer_timeout():
-	print(get_name(), ' ', str(position), ' ', str(move_dir))
 	if get_tree().is_network_server():
 		var X = 360
 		var Y = 640
@@ -65,6 +64,9 @@ func _on_updateTimer_timeout():
 remote func updateBrick(pos, dir):
 	position = pos
 	move_dir = dir
+
+func _process(delta):
+	update()
 
 func _physics_process(delta):
 	var motion = Vector2(move_dir.x * X_SPEED, move_dir.y * Y_SPEED) * delta
