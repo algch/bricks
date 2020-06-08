@@ -3,7 +3,7 @@ extends KinematicBody2D
 const X_SIZE = 80
 const Y_SIZE = 40
 
-const X_SPEED = 50
+const X_SPEED = 120
 const Y_SPEED = 30
 
 var move_dir = null
