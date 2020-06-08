@@ -12,6 +12,7 @@ func _ready():
 	BRICK_Y_SIZE = brick.Y_SIZE
 
 func parseBrick(brick):
+	# TODO do we need all the data here?
 	return {
 		'name': brick.get_name(),
 		'dir': brick.move_dir,
@@ -89,8 +90,7 @@ func spawnBricks():
 		arena.opponent_bricks[opponent_brick.get_name()] = parsed_opponent_brick
 		mirrored_opponent_brick = mirrorBrick(opponent_brick)
 
-	# bricks are mirrored
-	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick) # executes in opponent
+	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick)
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
 	if player_brick:

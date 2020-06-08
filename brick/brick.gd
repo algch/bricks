@@ -67,4 +67,4 @@ func _physics_process(delta):
 	var motion = Vector2(move_dir.x * X_SPEED, move_dir.y * Y_SPEED) * delta
 	var collision = move_and_collide(motion)
 	if collision:
-		move_dir *= -1
+		move_dir = Vector2(-move_dir.x, move_dir.y)
