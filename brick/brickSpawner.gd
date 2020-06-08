@@ -49,9 +49,10 @@ func mirrorBrick(brick):
 	var mirrored_y = 640 + (640 - brick.position.y)
 	var mirrored_x = 360 + (360 - brick.position.x)
 	var mirrored_pos = Vector2(mirrored_x, mirrored_y)
+	var mirrored_dir = brick.move_dir * -1
 	return {
 		'name': brick.get_name(),
-		'dir': brick.move_dir,
+		'dir': mirrored_dir,
 		'pos': mirrored_pos,
 		'type': brick.type,
 	}
