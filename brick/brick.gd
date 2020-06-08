@@ -30,6 +30,8 @@ func drawBrick():
 
 func _draw():
 	drawBrick()
+	var motion = Vector2(move_dir.x * X_SPEED, move_dir.y * Y_SPEED)
+	draw_line(Vector2(0, 0), motion, Color(1, 1, 1))
 
 remotesync func destroy():
 	var name = get_name()
