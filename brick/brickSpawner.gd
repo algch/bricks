@@ -29,6 +29,7 @@ func createBrick(dir):
 		360,
 		y_pos
 	)
+	brick.move_dir = Vector2(1 if randi() % 2 == 0 else -1, dir)
 	brick.set_name(name)
 	brick.set_position(brick_pos)
 	arena.add_child(brick)

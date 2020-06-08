@@ -2,7 +2,9 @@ extends KinematicBody2D
 
 const X_SIZE = 80
 const Y_SIZE = 40
-const SPEED = 50
+
+const X_SPEED = 50
+const Y_SPEED = 30
 
 var move_dir = null
 var type = null
@@ -12,8 +14,6 @@ onready var arena = get_node('/root/arena')
 # TODO rpc call is being executed in the wrong brick
 
 func _ready():
-	if not move_dir:
-		move_dir = Vector2(1 if randi() % 2 == 0 else -1, 0)
 	if not type:
 		type = 'normal'
 	$Label.set_text(get_name())
@@ -51,17 +51,20 @@ func handleWeaponCollision(collider):
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
 		var X = 360
+		var Y = 640
 		var mirrored_x = X + (X - position.x)
+		var mirrored_y = Y + (Y - position.y)
+		var mirrored_pos = Vector2(mirrored_x, mirrored_y)
 		var mirrored_dir = move_dir.rotated(PI)
-		rpc_unreliable('updateBrick', mirrored_x, mirrored_dir)
+		rpc_unreliable('updateBrick', mirrored_pos, mirrored_dir)
 		$updateTimer.start()
 
-remote func updateBrick(x, dir):
-	position.x = x
+remote func updateBrick(pos, dir):
+	position = pos
 	move_dir = dir
 
 func _physics_process(delta):
-	var motion = move_dir * SPEED * delta
+	var motion = Vector2(move_dir.x * X_SPEED, move_dir.y * Y_SPEED) * delta
 	var collision = move_and_collide(motion)
 	if collision:
 		move_dir *= -1
