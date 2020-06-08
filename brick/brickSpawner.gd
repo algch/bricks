@@ -73,21 +73,29 @@ func moveBricksToNextPos():
 		arena.opponent_bricks[brick_name]['pos'] = brick.position
 
 func spawnBricks():
-	var player_brick = createBrick(1)
-	var parsed_player_brick = parseBrick(player_brick)
-	arena.player_bricks[player_brick.get_name()] = parsed_player_brick
+	var mirrored_opponent_brick = null
+	var mirrored_player_brick = null
 
-	var opponent_brick = createBrick(-1)
-	var parsed_opponent_brick = parseBrick(opponent_brick)
-	arena.opponent_bricks[opponent_brick.get_name()] = parsed_opponent_brick
+	if len(arena.player_bricks) < 3:
+		var player_brick = createBrick(1)
+		var parsed_player_brick = parseBrick(player_brick)
+		arena.player_bricks[player_brick.get_name()] = parsed_player_brick
+		mirrored_player_brick = mirrorBrick(player_brick)
+
+	if len(arena.opponent_bricks) < 3:
+		var opponent_brick = createBrick(-1)
+		var parsed_opponent_brick = parseBrick(opponent_brick)
+		arena.opponent_bricks[opponent_brick.get_name()] = parsed_opponent_brick
+		mirrored_opponent_brick = mirrorBrick(opponent_brick)
 
 	# bricks are mirrored
-	var mirrored_opponent_brick = mirrorBrick(opponent_brick)
-	var mirrored_player_brick = mirrorBrick(player_brick)
 	rpc('syncSpawnedBricks', mirrored_opponent_brick, mirrored_player_brick) # executes in opponent
 
 remote func syncSpawnedBricks(player_brick, opponent_brick):
-	arena.player_bricks[player_brick.get('name')] = player_brick
-	createBrickFromParsed(player_brick)
-	arena.opponent_bricks[opponent_brick.get('name')] = opponent_brick
-	createBrickFromParsed(opponent_brick)
+	if player_brick:
+		arena.player_bricks[player_brick.get('name')] = player_brick
+		createBrickFromParsed(player_brick)
+
+	if opponent_brick:
+		arena.opponent_bricks[opponent_brick.get('name')] = opponent_brick
+		createBrickFromParsed(opponent_brick)
