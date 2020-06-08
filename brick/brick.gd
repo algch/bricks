@@ -49,13 +49,14 @@ func handleWeaponCollision(collider):
 		arena.rpc('endTurn')
 
 func _on_updateTimer_timeout():
+	print(get_name(), ' ', str(position), ' ', str(move_dir))
 	if get_tree().is_network_server():
 		var X = 360
 		var Y = 640
 		var mirrored_x = X + (X - position.x)
 		var mirrored_y = Y + (Y - position.y)
 		var mirrored_pos = Vector2(mirrored_x, mirrored_y)
-		var mirrored_dir = move_dir.rotated(PI)
+		var mirrored_dir = move_dir * -1
 		rpc_unreliable('updateBrick', mirrored_pos, mirrored_dir)
 		$updateTimer.start()
 
