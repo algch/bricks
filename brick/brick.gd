@@ -3,7 +3,7 @@ extends KinematicBody2D
 const X_SIZE = 80
 const Y_SIZE = 40
 
-const X_SPEED = 120
+const X_SPEED = 200
 const Y_SPEED = 30
 
 var move_dir = null
@@ -11,7 +11,6 @@ var type = null
 
 onready var arena = get_node('/root/arena')
 
-# TODO rpc call is being executed in the wrong brick
 
 func _ready():
 	if not type:

@@ -4,19 +4,27 @@ var arrow_class = preload('res://weapons/arrow.tscn')
 
 onready var arena = get_node('/root/arena/')
 var is_player = false
+var bases = 0
 
 func init(player):
 	is_player = player
 
-func _ready():
-	pass
+func _on_base_created():
+	pritn('base created')
+	bases += 1
+
+func _on_base_destroyed():
+	pritn('base destroyed')
+	bases -= 1
+	if bases <= 0:
+		print('game over')
 
 func shootArrow():
 	if not is_player:
 		return
 
 	var mouse_pos = get_global_mouse_position()
-	var start_pos = $nozzle.get_global_position()
+	var start_pos = $shooter/nozzle.get_global_position()
 
 	var arrow_dir = (mouse_pos - start_pos).normalized()
 	var arrow = arrow_class.instance()
@@ -26,7 +34,7 @@ func shootArrow():
 	get_parent().add_child(arrow)
 
 remote func syncArrow(x_pos, dir):
-	var start_pos = $nozzle.get_global_position()
+	var start_pos = $shooter/nozzle.get_global_position()
 	start_pos.x = x_pos
 
 	var arrow = arrow_class.instance()
