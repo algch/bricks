@@ -5,12 +5,12 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 60.0
 
-[node name="base" type="StaticBody2D"]
+[node name="base" type="StaticBody2D" groups=[
+"collisionable",
+]]
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="." groups=[
-"collisionable",
-]]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]

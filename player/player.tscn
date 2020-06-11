@@ -53,13 +53,13 @@ position = Vector2( 0, -115 )
 [node name="base" parent="." instance=ExtResource( 26 )]
 
 [node name="base2" parent="." instance=ExtResource( 26 )]
-position = Vector2( 150, 0 )
+position = Vector2( 120, 0 )
 
 [node name="base3" parent="." instance=ExtResource( 26 )]
-position = Vector2( -150, 0 )
+position = Vector2( -120, 0 )
 
 [node name="base4" parent="." instance=ExtResource( 26 )]
-position = Vector2( -300, 0 )
+position = Vector2( -240, 0 )
 
 [node name="base5" parent="." instance=ExtResource( 26 )]
-position = Vector2( 300, 0 )
+position = Vector2( 240, 0 )
