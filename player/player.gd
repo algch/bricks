@@ -10,11 +10,11 @@ func init(player):
 	is_player = player
 
 func _on_base_created():
-	pritn('base created')
+	print('base created')
 	bases += 1
 
 func _on_base_destroyed():
-	pritn('base destroyed')
+	print('base destroyed')
 	bases -= 1
 	if bases <= 0:
 		print('game over')
