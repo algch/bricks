@@ -45,7 +45,7 @@ remotesync func destroy():
 
 func handleWeaponCollision(collider):
 	if get_tree().is_network_server():
-		arena.rpc('endTurn', false)
+		arena.rpc('endTurn', !arena.is_player_turn)
 		collider.rpc('destroy')
 		rpc('destroy')
 
