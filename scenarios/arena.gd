@@ -34,6 +34,7 @@ func instantiateOpponent():
 	add_child(player)
 
 remotesync func endTurn(turn):
+	print('endTurn')
 	$turnTimer.stop()
 
 	for weapon in get_tree().get_nodes_in_group('weapons'):

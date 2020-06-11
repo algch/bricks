@@ -45,9 +45,11 @@ remotesync func destroy():
 
 func handleWeaponCollision(collider):
 	if get_tree().is_network_server():
-		rpc('destroy')
-		collider.rpc('destroy')
+		print('handle weapon collision on server')
+		print('arena ', arena)
 		arena.rpc('endTurn')
+		collider.rpc('destroy')
+		rpc('destroy')
 
 func _on_updateTimer_timeout():
 	if get_tree().is_network_server():
@@ -71,4 +73,9 @@ func _physics_process(delta):
 	var motion = Vector2(move_dir.x * X_SPEED, move_dir.y * Y_SPEED) * delta
 	var collision = move_and_collide(motion)
 	if collision:
+		var collider = collision.get_collider()
+
+		if collider.is_in_group('base'):
+			collider.handleWeaponCollision(self)
+			queue_free()
 		move_dir = Vector2(-move_dir.x, move_dir.y)
