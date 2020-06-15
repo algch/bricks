@@ -53,6 +53,7 @@ func handleWeaponCollision(collider, collision):
 		rpc('destroy')
 
 func _on_updateTimer_timeout():
+	# TODO trust the sender instead of the server
 	if get_tree().is_network_server():
 		var X = 360
 		var Y = 640

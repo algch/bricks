@@ -72,7 +72,7 @@ func _ready():
 	$Label.set_text(get_name())
 
 func parseBrick(brick):
-	# TODO do we need all the data here?
+	# do we need all the data here?
 	return {
 		'name': brick.get_name(),
 		'dir': brick.move_dir,

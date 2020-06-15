@@ -4,6 +4,7 @@ signal base_created
 signal base_destroyed
 
 func handleWeaponCollision(collider, collision):
+	# TODO send destroy rpc through network
 	queue_free()
 	emit_signal('base_destroyed', get_name())
 

@@ -36,7 +36,7 @@ func _on_base_destroyed(base_name):
 			break
 
 	if game_over:
-		# TODO
+		# TODO trigger gameover / victory
 		print('game over')
 
 func shootArrow():
