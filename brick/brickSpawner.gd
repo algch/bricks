@@ -11,8 +11,6 @@ var speed = MAX_SPEED
 var direction = null
 var sender_id = null
 
-# only spawn bricks when arrow collides
-
 func handleWeaponCollision(collider, collision):
 	if collider.sender_id == get_tree().get_network_unique_id():
 		collider.rpc('destroy')
