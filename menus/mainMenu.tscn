@@ -90,7 +90,7 @@ margin_left = 153.0
 margin_right = 674.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
-text = "192.168.1."
+text = "127.0.0.1"
 
 [node name="joinButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
 margin_left = 678.0

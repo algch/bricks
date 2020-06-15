@@ -5,12 +5,16 @@ const Y_SIZE = 40
 
 const X_SPEED = 200
 const Y_SPEED = 30
+const MAX_SPEED = 100
+var speed = MAX_SPEED
 
 var move_dir = null
 var type = null
 
 onready var arena = get_node('/root/arena')
 
+func init():
+	pass
 
 func _ready():
 	if not type:
@@ -43,9 +47,8 @@ remotesync func destroy():
 
 	queue_free()
 
-func handleWeaponCollision(collider):
+func handleWeaponCollision(collider, collision):
 	if get_tree().is_network_server():
-		arena.rpc('endTurn', !arena.is_player_turn)
 		collider.rpc('destroy')
 		rpc('destroy')
 
@@ -68,12 +71,11 @@ func _process(delta):
 	update()
 
 func _physics_process(delta):
-	var motion = Vector2(move_dir.x * X_SPEED, move_dir.y * Y_SPEED) * delta
+	var motion = move_dir * speed * delta
 	var collision = move_and_collide(motion)
 	if collision:
 		var collider = collision.get_collider()
 
 		if collider.is_in_group('base'):
-			collider.handleWeaponCollision(self)
-			queue_free()
-		move_dir = Vector2(-move_dir.x, move_dir.y)
+			collider.handleWeaponCollision(self, collision)
+			rpc('destroy')

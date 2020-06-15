@@ -5,6 +5,8 @@ var lobby_class = preload('res://menus/lobby.tscn')
 # var solo_class = preload('res://scenarios/solo.tscn')
 var ip_address = ''
 
+func _ready():
+	ip_address = $VBoxContainer/HBoxContainer2/ipAddress.get_text()
 
 func _on_solo():
 	pass

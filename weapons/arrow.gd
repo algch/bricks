@@ -1,14 +1,15 @@
 extends KinematicBody2D
 
+var sender_id = null
 var direction = Vector2(0, 0)
 var speed = 640
-onready var player = get_node('/root/arena/player')
 
 func _ready():
 	if get_tree().is_network_server():
 		$updateTimer.start()
 
-func init(dir, pos):
+func init(dir, pos, emitter_id):
+	sender_id = emitter_id
 	direction = dir.normalized()
 	position = pos
 	rotation = dir.angle() + PI/2
@@ -24,7 +25,7 @@ func handleCollision(collision):
 	var collider = collision.get_collider()
 
 	if collider.is_in_group('collisionable'):
-		collider.handleWeaponCollision(self)
+		collider.handleWeaponCollision(self, collision)
 
 	var normal = collision.get_normal()
 	direction = direction.bounce(normal)
@@ -43,12 +44,8 @@ remote func updateArrow(pos, dir):
 	rotation = dir.angle() + PI/2
 
 func _on_updateTimer_timeout():
-	if get_tree().is_network_server():
-		var X = 360
-		var Y = 640
-		var mirrored_x = X + (X - position.x)
-		var mirrored_y = Y + (Y - position.y)
-		var mirrored_pos = Vector2(mirrored_x, mirrored_y)
+	if sender_id == get_tree().get_network_unique_id():
+		var mirrored_pos = Utils.getMirrored(position)
 		var mirrored_dir = direction.rotated(PI)
 		rpc_unreliable('updateArrow', mirrored_pos, mirrored_dir)
 		$updateTimer.start()
