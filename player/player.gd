@@ -78,14 +78,12 @@ func _input(event):
 		$weaponTimer.stop()
 		is_pressed = false
 		can_shoot = false
+	rpc('syncShootingState', can_shoot)
 
 func _draw():
 	if is_pressed:
-		draw_line(
-			reference_pos - position,
-			get_global_mouse_position() - position,
-			Color(.8, .8, .8)
-		)
+		var arrow_dir = reference_pos - get_global_mouse_position()
+		draw_line(Vector2(0, 0), arrow_dir, Color(.8, .8, .8))
 	if can_shoot:
 		draw_circle(
 			Vector2(0, -100),
@@ -95,6 +93,9 @@ func _draw():
 
 func _process(delta):
 	update()
+	if is_pressed:
+		var arrow_dir = reference_pos - get_global_mouse_position()
+		$shooter.rotation = arrow_dir.angle() + PI/2
 
 func _on_Area2D_body_entered(body):
 	body.rpc('destroy')

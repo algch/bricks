@@ -6,7 +6,7 @@ var BRICK_Y_SIZE
 const BRICK_SPACE = 10
 onready var arena = get_node('/root/arena/')
 var should_move = false
-var MAX_SPEED = 100
+var MAX_SPEED = 500
 var speed = MAX_SPEED
 var direction = null
 var sender_id = null
@@ -21,7 +21,7 @@ func handleWeaponCollision(collider, collision):
 		direction = collider.direction.bounce(normal).rotated(PI)
 		$movementTimer.start()
 
-		var brick_dir = Vector2(0, 1)
+		var brick_dir = Vector2(0, -1)
 		if collider.sender_id == sender_id:
 			brick_dir *= -1
 		var brick = self.createBrick(brick_dir)
