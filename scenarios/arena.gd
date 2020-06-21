@@ -33,7 +33,7 @@ remote func syncSpawner(ball_name, pos, emitter_id):
 	print('sync spawner ', ball_name, pos, emitter_id)
 	var spawner = spawner_class.instance()
 	spawner.init(ball_name, Utils.getMirrored(pos), emitter_id)
-	spawner.rotate(PI)
+	# spawner.rotate(PI)
 	if get_node(ball_name):
 		return
 	add_child(spawner)

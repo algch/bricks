@@ -49,8 +49,8 @@ remote func syncCollision(pos, dir, raw_brick, colli_pos):
 	arena.add_child(brick)
 
 	var hitspot = hitspot_class.instance()
-	hitspot.position = position - Utils.getMirrored(colli_pos)
-	hitspot.rotation = dir.rotated(PI).angle()
+	hitspot.position = Utils.getMirrored(colli_pos) - position
+	hitspot.rotation = dir.angle()
 	add_child(hitspot)
 
 func _on_movementTimer_timeout():
@@ -77,6 +77,9 @@ func _physics_process(delta):
 	if collision:
 		var normal = collision.get_normal()
 		direction = direction.bounce(normal)
+		for child in get_children():
+			if child is Particles2D:
+				child.queue_free()
 		var collider = collision.get_collider()
 		if collider.is_in_group('collisionable'):
 			collider.handleWeaponCollision(self, collision)
