@@ -1,6 +1,7 @@
 extends Node2D
 
 var arrow_class = preload('res://weapons/arrow.tscn')
+var ball_class = preload('res://brick/brickSpawner.tscn')
 
 onready var arena = get_node('/root/arena/')
 var is_player = false
@@ -27,7 +28,7 @@ func _on_base_created(base_name):
 	}
 
 func _on_base_destroyed(base_name):
-	bases.erase(base_name)
+	bases[base_name]['is_alive'] = false
 
 	var game_over = true
 	for key in bases.keys():
@@ -51,15 +52,10 @@ remotesync func _shootArrow(emitter_id, arrow_dir):
 
 	var start_pos = $shooter/nozzle.get_global_position()
 	var arrow = arrow_class.instance()
-	arrow.init(arrow_dir, start_pos, emitter_id)
-	get_parent().add_child(arrow)
-
-remote func syncArrow(x_pos, dir):
-	var start_pos = $shooter/nozzle.get_global_position()
-	start_pos.x = x_pos
-
-	var arrow = arrow_class.instance()
-	arrow.init(dir, start_pos)
+	var brick_dir = 1
+	if is_player:
+		brick_dir *= -1
+	arrow.init(arrow_dir, start_pos, emitter_id, brick_dir)
 	get_parent().add_child(arrow)
 
 remote func syncShootingState(can):
@@ -83,7 +79,7 @@ func _input(event):
 func _draw():
 	if is_pressed:
 		var arrow_dir = reference_pos - get_global_mouse_position()
-		draw_line(Vector2(0, 0), arrow_dir, Color(.8, .8, .8))
+		draw_line(get_node('shooter').position, arrow_dir, Color(.8, .8, .8))
 	if can_shoot:
 		draw_circle(
 			Vector2(0, -100),
@@ -104,3 +100,17 @@ func _on_weaponTimer_timeout():
 	$weaponTimer.stop()
 	can_shoot = true
 	rpc('syncShootingState', can_shoot)
+
+func generateBall():
+	var ball = ball_class.instance()
+	var name = str(get_tree().get_network_unique_id()) + '_' + str(get_instance_id())
+	var emitter_id = get_tree().get_network_unique_id()
+	ball.init(name, emitter_id)
+	ball.position = arena.get_node('spawnerPos').position
+
+remote func syncBall(name):
+	var ball = ball_class.instance()
+	ball.position = Utils.getMirrored(arena.get_node('spawnerPos').position)
+	ball.set_name(name)
+	ball.rotate(PI)
+	add_child(ball)

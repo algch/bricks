@@ -10,11 +10,15 @@ var speed = MAX_SPEED
 
 var move_dir = null
 var type = null
+var sender_id = null
 
 onready var arena = get_node('/root/arena')
 
-func init():
-	pass
+func init(brick_name, dir, pos, s_id):
+	sender_id = s_id
+	move_dir = dir
+	set_name(brick_name)
+	set_position(pos)
 
 func _ready():
 	if not type:
@@ -37,20 +41,14 @@ func _draw():
 	draw_line(Vector2(0, 0), motion, Color(1, 1, 1))
 
 remotesync func destroy():
-	var name = get_name()
-
-	if name in arena.player_bricks:
-		arena.player_bricks.erase(name)
-
-	if name in arena.opponent_bricks:
-		arena.opponent_bricks.erase(name)
+	if is_queued_for_deletion():
+		return
 
 	queue_free()
 
 func handleWeaponCollision(collider, collision):
-	if get_tree().is_network_server():
-		collider.rpc('destroy')
-		rpc('destroy')
+	collider.rpc('destroy')
+	rpc('destroy')
 
 func _on_updateTimer_timeout():
 	# TODO trust the sender instead of the server
@@ -77,6 +75,6 @@ func _physics_process(delta):
 	if collision:
 		var collider = collision.get_collider()
 
-		if collider.is_in_group('base'):
+		if collider.is_in_group('collisionable'):
 			collider.handleWeaponCollision(self, collision)
 			rpc('destroy')

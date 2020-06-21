@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var sender_id = null
+var brick_dir = 1
 var direction = Vector2(0, 0)
 var speed = 640
 
@@ -8,17 +9,21 @@ func _ready():
 	if get_tree().is_network_server():
 		$updateTimer.start()
 
-func init(dir, pos, emitter_id):
+func init(dir, pos, emitter_id, b_dir):
 	sender_id = emitter_id
 	direction = dir.normalized()
 	position = pos
 	rotation = dir.angle() + PI/2
+	brick_dir = b_dir
 
 func getOwner():
 	var net_id = str(get_tree().get_network_unique_id())
 	return get_node('/root/arena/' + net_id)
 
 remotesync func destroy():
+	if is_queued_for_deletion():
+		return
+
 	queue_free()
 
 func handleCollision(collision):
