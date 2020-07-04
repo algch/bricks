@@ -1,23 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://brick/brickSpawner.gd" type="Script" id=1]
-[ext_resource path="res://fonts/NimbusMonoPS-Regular.otf" type="DynamicFontData" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 60.0
 
-[sub_resource type="DynamicFont" id=3]
-size = 30
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 30
-font_data = ExtResource( 2 )
-
 [node name="brickSpawner" type="KinematicBody2D" groups=[
 "collisionable",
+"enters_goal",
 ]]
-collision_layer = 5
+collision_layer = 10
 collision_mask = 5
 script = ExtResource( 1 )
 
@@ -26,24 +18,4 @@ shape = SubResource( 1 )
 
 [node name="movementTimer" type="Timer" parent="."]
 wait_time = 5.0
-
-[node name="Label" type="Label" parent="."]
-margin_left = 71.9614
-margin_top = -9.28534
-margin_right = 111.961
-margin_bottom = 4.71466
-custom_fonts/font = SubResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="."]
-margin_left = 73.5089
-margin_top = 22.7878
-margin_right = 113.509
-margin_bottom = 43.7878
-custom_fonts/font = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="timeout" from="movementTimer" to="." method="_on_movementTimer_timeout"]

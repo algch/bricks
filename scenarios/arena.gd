@@ -6,6 +6,9 @@ const spawner_class = preload('res://brick/brickSpawner.tscn')
 var server_id
 var client_id
 
+var arrow_class = preload('res://weapons/arrow.tscn')
+var ball_class = preload('res://brick/brickSpawner.tscn')
+
 func init(server, client):
 	server_id = server
 	client_id = client

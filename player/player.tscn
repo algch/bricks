@@ -27,7 +27,7 @@
 [ext_resource path="res://player/player.gd" type="Script" id=25]
 [ext_resource path="res://player/base.tscn" type="PackedScene" id=26]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 15 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 16 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 19 ) ],
 "loop": true,
@@ -40,41 +40,44 @@ animations = [ {
 "speed": 24.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 300, 10 )
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 360, 10 )
 
 [node name="player" type="Node2D"]
 script = ExtResource( 25 )
 
 [node name="shooter" type="AnimatedSprite" parent="."]
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 animation = "aim"
 
 [node name="nozzle" type="Position2D" parent="shooter"]
 position = Vector2( 0, -115 )
 
-[node name="Label" type="Label" parent="shooter"]
-margin_left = -40.0844
-margin_top = -106.892
-margin_right = -0.0843506
-margin_bottom = -92.8917
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="base" parent="." instance=ExtResource( 26 )]
+position = Vector2( -320, 0 )
 
 [node name="base2" parent="." instance=ExtResource( 26 )]
-position = Vector2( 120, 0 )
-
-[node name="base3" parent="." instance=ExtResource( 26 )]
-position = Vector2( -120, 0 )
-
-[node name="base4" parent="." instance=ExtResource( 26 )]
 position = Vector2( -240, 0 )
 
+[node name="base3" parent="." instance=ExtResource( 26 )]
+position = Vector2( -160, 0 )
+
+[node name="base4" parent="." instance=ExtResource( 26 )]
+position = Vector2( -80, 0 )
+
 [node name="base5" parent="." instance=ExtResource( 26 )]
+
+[node name="base6" parent="." instance=ExtResource( 26 )]
+position = Vector2( 80, 0 )
+
+[node name="base7" parent="." instance=ExtResource( 26 )]
+position = Vector2( 160, 0 )
+
+[node name="base8" parent="." instance=ExtResource( 26 )]
 position = Vector2( 240, 0 )
+
+[node name="base9" parent="." instance=ExtResource( 26 )]
+position = Vector2( 320, 0 )
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 0, 30 )
@@ -82,9 +85,17 @@ collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( -359.565, -8.58318, 361.573, -7.91975, 361.573, 10.656, -360.228, 10.656 )
 
 [node name="weaponTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="presentationTimer" type="Timer" parent="."]
+[connection signal="animation_finished" from="shooter" to="." method="_on_shooter_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="weaponTimer" to="." method="_on_weaponTimer_timeout"]
+[connection signal="timeout" from="presentationTimer" to="." method="_on_presentationTimer_timeout"]

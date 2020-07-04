@@ -1,15 +1,41 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://brick/brick.gd" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 40, 20 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 20.0
+
+[sub_resource type="Curve" id=2]
+min_value = -1.0
+_data = [ Vector2( 0.0189873, 0.0772728 ), 0.0, -0.437154, 0, 0, Vector2( 1, -0.231818 ), -1.58, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.984091 ), 0.0, 0.0, 0, 0, Vector2( 0.981013, 0.447727 ), 1.02057, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 0, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 100, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 3.0
+scale_curve = SubResource( 5 )
+color = Color( 0.882353, 0.0705882, 0.0705882, 1 )
+hue_variation_curve = SubResource( 3 )
 
 [node name="brick" type="KinematicBody2D" groups=[
 "collisionable",
+"enters_goal",
 ]]
 collision_layer = 10
-collision_mask = 10
+collision_mask = 5
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -23,12 +49,8 @@ scale = Vector2( 0.5987, 0.597566 )
 wait_time = 0.5
 autostart = true
 
-[node name="Label" type="Label" parent="."]
-margin_left = -37.8948
-margin_top = -36.8421
-margin_right = 2.10522
-margin_bottom = -22.8421
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Particles2D" type="Particles2D" parent="."]
+amount = 12
+lifetime = 1.5
+process_material = SubResource( 6 )
 [connection signal="timeout" from="updateTimer" to="." method="_on_updateTimer_timeout"]

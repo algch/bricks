@@ -14,7 +14,7 @@ remotesync func destroy():
 	emit_signal('base_destroyed', get_name())
 
 func _draw():
-	draw_circle(Vector2(0, 0), 60, Color(0, 0, 1))
+	pass
 
 func _ready():
 	connect('base_created', get_parent(), '_on_base_created')

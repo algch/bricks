@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://menus/mainMenu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/NimbusMonoPS-Regular.otf" type="DynamicFontData" id=2]
@@ -12,11 +12,11 @@ size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 26
+size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 26
+size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=5]
@@ -28,11 +28,19 @@ size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=7]
-size = 26
+size = 30
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=8]
-size = 26
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 30
 font_data = ExtResource( 2 )
 
 [node name="mainMenu" type="Control"]
@@ -53,51 +61,52 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = 420.0
+margin_top = 416.0
 margin_right = 719.0
-margin_bottom = 461.0
+margin_bottom = 457.0
 custom_fonts/font = SubResource( 1 )
 text = "Brick Breaker"
 align = 1
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
-margin_top = 465.0
+margin_top = 461.0
 margin_right = 719.0
-margin_bottom = 496.0
+margin_bottom = 492.0
 custom_fonts/font = SubResource( 2 )
 text = "Create a match"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 500.0
+margin_top = 496.0
 margin_right = 719.0
 margin_bottom = 537.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 margin_top = 5.0
-margin_right = 64.0
-margin_bottom = 32.0
+margin_right = 72.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 3 )
 text = "Name"
 
 [node name="TextEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
-margin_left = 68.0
-margin_right = 682.0
-margin_bottom = 37.0
+margin_left = 76.0
+margin_right = 667.0
+margin_bottom = 41.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 4 )
 
 [node name="serverButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 686.0
+margin_left = 671.0
 margin_right = 719.0
-margin_bottom = 37.0
+margin_bottom = 41.0
+custom_fonts/font = SubResource( 5 )
 text = "GO"
 
 [node name="Label3" type="Label" parent="VBoxContainer"]
 margin_top = 541.0
 margin_right = 719.0
 margin_bottom = 776.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "
 
 
@@ -111,34 +120,35 @@ align = 1
 margin_top = 780.0
 margin_right = 719.0
 margin_bottom = 811.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 align = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 815.0
 margin_right = 719.0
-margin_bottom = 852.0
+margin_bottom = 856.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
 margin_top = 5.0
-margin_right = 400.0
-margin_bottom = 32.0
-custom_fonts/font = SubResource( 7 )
-text = "Join a match (enter I.P.)"
+margin_right = 180.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 8 )
+text = "IP address"
 
 [node name="ipAddress" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 404.0
-margin_right = 674.0
-margin_bottom = 37.0
+margin_left = 184.0
+margin_right = 523.0
+margin_bottom = 41.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "127.0.0.1"
 
 [node name="joinButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 678.0
+margin_left = 527.0
 margin_right = 719.0
-margin_bottom = 37.0
-text = "JOIN"
+margin_bottom = 41.0
+custom_fonts/font = SubResource( 10 )
+text = "JOIN MATCH"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/serverButton" to="." method="_on_createMatch"]
 [connection signal="text_changed" from="VBoxContainer/HBoxContainer2/ipAddress" to="." method="_on_ipAddress_text_changed"]
 [connection signal="text_entered" from="VBoxContainer/HBoxContainer2/ipAddress" to="." method="_on_join"]

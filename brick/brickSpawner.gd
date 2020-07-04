@@ -2,8 +2,6 @@ extends KinematicBody2D
 
 var brick_class = preload('res://brick/brick.tscn')
 var hitspot_class = preload('res://brick/hitSpot.tscn')
-var BRICK_X_SIZE
-var BRICK_Y_SIZE
 const BRICK_SPACE = 10
 onready var arena = get_node('/root/arena/')
 var should_move = false
@@ -24,8 +22,7 @@ func handleWeaponCollision(collider, collision):
 		add_child(hitspot)
 		$movementTimer.start()
 
-		var brick_dir = Vector2(0, 1) * collider.brick_dir
-		var brick = self.createBrick(brick_dir, collider.sender_id)
+		var brick = self.createBrick(collider.brick_dir, collider.sender_id)
 		arena.add_child(brick)
 		var raw_brick = self.parseBrick(brick)
 
@@ -80,10 +77,6 @@ func _physics_process(delta):
 		for child in get_children():
 			if child is Particles2D:
 				child.queue_free()
-		var collider = collision.get_collider()
-		if collider.is_in_group('collisionable'):
-			collider.handleWeaponCollision(self, collision)
-			rpc('destroy')
 
 remotesync func destroy():
 	print('destroy was called')
@@ -96,11 +89,7 @@ remotesync func destroy():
 
 
 func _ready():
-	var brick = brick_class.instance()
-	BRICK_X_SIZE = brick.X_SIZE
-	BRICK_Y_SIZE = brick.Y_SIZE
-	$Label.set_text(get_name())
-	$Label2.set_text(str(sender_id))
+	pass
 
 func parseBrick(brick):
 	# do we need all the data here?
@@ -133,3 +122,11 @@ func createBrickFromParsed(parsed_brick):
 	brick.type = parsed_brick.get('type')
 
 	return brick
+
+func handleEnteredGoal(player):
+	if is_queued_for_deletion():
+		return
+
+	rpc('destroy')
+	if can_trigger_respawn:
+		player.receivedGoal()
